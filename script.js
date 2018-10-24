@@ -107,12 +107,22 @@ function isVowel(character) {
     }
 }
 
+// function isConsonant(character) {
+//     if(!isVowel(character) && isAlpha(character) === true) {
+//         return true
+//         consonantCount++
+//     } else {
+//         return false
+//     }
+// }
+
 function isConsonant(character) {
-    if(!isVowel(character) && isAlpha(character) === true) {
-        return true
-        consonantCount++
-    } else {
+    consonantString = 'bcdfghjklmnpqrstvwxyz'
+
+    if(consonantString.indexOf(character) === -1) {
         return false
+    } else {
+        return true
     }
 }
 
