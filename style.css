@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+table {
+    border: 3px solid black;
+    padding:10px;
+    width:30px;
+    height:30px;
+    border-color:navy;
+    background-color:white;
+    font-size: 20px;
+    font-family: 'Fredoka One';
+    border-style:dashed;
+    border-width:3px;
+    border-radius:8px;
+    text-align:center;
+    vertical-align:middle;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+th, td {
+    border: 2px dashed green;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+input {
+    width:300px;
+    height:30px;
+    border-color:black;
+    background-color:white;
+    font-size: 20px;
+    font-family: 'Fredoka One';
+    border-width:3px;
+    border-radius:8px;
+    text-align:center;
+    vertical-align:middle;
+    padding-left:15px;
+    padding-right:15px;
+}
+
+#textBox {
+    
+}
