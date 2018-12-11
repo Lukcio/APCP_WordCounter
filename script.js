@@ -1,27 +1,38 @@
-var sentence = ""
+var sentence = "";
 var vowelNums = [0, 0, 0, 0, 0]
-var consonantCount = 0
-var characterCount = 0
+var consonantCount = 0;
+var characterCount = 0;
+var uniqueWordsArray = [];
+var wordsArray = [];
 
-$("#textBox").on('change keyup paste', function() {
-    vowelNums = [0, 0, 0, 0, 0]
-    consonantCount = 0
-    characterCount = 0
+var outputBox = $("#outputBox");
+
+//$("#largeTextBox").on('change keyup paste', function() {
+$("#indexButton").click(function() {
+    outputBox.val("");
+    console.log("first")
+    vowelNums = [0, 0, 0, 0, 0];
+    consonantCount = 0;
+    characterCount = 0;
+    wordsArray = [];
+
+    uniqueWordsArray = [];
    
-    sentence = $('#textBox').val()
+    sentence = $('#largeTextBox').val();
    
-    sentence = sentence.toLowerCase()
+    sentence = sentence.toLowerCase();
 
     //count and display consonants and vowels
-    parseVowelAmounts(sentence)
-    displayNumberOfVowels()
-    countConsonants(sentence)
+    parseVowelAmounts(sentence);
+    displayNumberOfVowels();
+    countConsonants(sentence);
 
     //display number of characters
-    countCharactersAndDisplay(sentence)
+    countCharactersAndDisplay(sentence);
    
     //count words
-    countWords(sentence)
+    countWords(sentence);
+    displayWords(wordsArray);
 }
 );
 
@@ -30,80 +41,80 @@ function parseVowelAmounts(str){
     for(var i = 0; i < str.length; i++) {
         if(isVowel(str.charAt(i))) {
             if(str.charAt(i) === "a") {
-                vowelNums[0]++
-                vowelCount++
+                vowelNums[0]++;
+                vowelCount++;
             } 
             if(str.charAt(i) === "e") {
-                vowelNums[1]++
-                vowelCount++
+                vowelNums[1]++;
+                vowelCount++;
             }
             if(str.charAt(i) === "i") {
-                vowelNums[2]++
-                vowelCount++
+                vowelNums[2]++;
+                vowelCount++;
             }
             if(str.charAt(i) === "o") {
-                vowelNums[3]++
-                vowelCount++
+                vowelNums[3]++;
+                vowelCount++;
             }
             if(str.charAt(i) === "u") {
-                vowelNums[4]++
-                vowelCount++
+                vowelNums[4]++;
+                vowelCount++;
             }
         }
     }
-    return vowelNums
+    return vowelNums;
 }
 
 function displayNumberOfVowels() {
-    $("#a").text(vowelNums[0])
-    $("#e").text(vowelNums[1])
-    $("#i").text(vowelNums[2])
-    $("#o").text(vowelNums[3])
-    $("#u").text(vowelNums[4])
+    $("#a").text(vowelNums[0]);
+    $("#e").text(vowelNums[1]);
+    $("#i").text(vowelNums[2]);
+    $("#o").text(vowelNums[3]);
+    $("#u").text(vowelNums[4]);
 }
 
 function countCharactersAndDisplay(string) {
-    string = string.replace(/\s/g, "")
+    string = string.replace(/\s/g, "");
     
     for(i = 0; i < string.length; i++) {
         if(isAlpha(string.charAt(i))) {
-            characterCount++
+            characterCount++;
         }
     }
     
-    $("#characters").text(characterCount)
+    $("#characters").text(characterCount);
 }
 
 function countConsonants(string) {
-    var string = string.replace(/\s/g, "")
+    var string = string.replace(/\s/g, "");
 
     for(i = 0; i < string.length; i++) {
         if(isConsonant(string.charAt(i))) {
-            consonantCount++
+            consonantCount++;
         }
     }
-    $("#consonants").text(consonantCount)
+    $("#consonants").text(consonantCount);
 }
 
 function isVowel(character) {
     if(character == 'a') {
-        return true
+        return true;
     }
     
     if(character == 'e') {
-        return true
+        return true;
     }
     
     if(character == 'i') {
-        return true
+        return true;
     }
     
     if(character == 'o') {
-        return true
+        return true;
     }
     
     if(character == 'u') {
-        return true
+        return true;
     }
 }
 
@@ -117,12 +128,12 @@ function isVowel(character) {
 // }
 
 function isConsonant(character) {
-    consonantString = 'bcdfghjklmnpqrstvwxyz'
+    consonantString = 'bcdfghjklmnpqrstvwxyz';
 
     if(consonantString.indexOf(character) === -1) {
-        return false
+        return false;
     } else {
-        return true
+        return true;
     }
 }
 
@@ -138,38 +149,71 @@ function isAlpha(str) {
 function countWords(string) {
     
     if(string != "" || string != " ") {
-        console.log('very first')
+        //console.log('very first');
 
-        var wordCount = 0
-        var done = false
-        var foundWord = false
-        var i = 0
-        var b = 0
-        var e = 0
+        var wordCount = 0;
+        var i = 0;
+        var b = 0;
+        var e = 0;
 
-        while(!done) {
-            foundWord = false           
-            while(isAlpha(string.charAt(i)) != true && !done) {
-                if(i >= string.length) {
-                    done = true
-                } else {
-                    i++
-                }
+        while(i < string.length) {
+            //foundWord = false           
+            while(!isAlpha(string.charAt(i)) && i < string.length) {
+                i++;
             }
-            b = i
-            e = i
-            while(isAlpha(string.charAt(e)) && done === false && foundWord === false) {
-                if(isAlpha(string.charAt(e)) && !isAlpha(string.charAt(e - 1))) {
-                    foundWord = true
-                    wordCount++
-                } else if(isAlpha(string.charAt(e))) {
-                    foundWord = true
-                } else {
-                    e++
-                }
+            b = i;
+
+            while(isAlpha(string.charAt(i)) && i < string.length) {
+                i++;
             }
-            i++
+            e = i;
+
+            updateWordArray(b, e, string);
+
+            if(b != i) {
+                wordCount++;
+            }
         }
     }
-    $("#words").text(wordCount)
+    $("#words").text(wordCount);
 }
+
+function updateWordArray(b, e, sentence) {
+    //var uniqueWord = true;
+    var wordObjectKey = sentence.substring(b, e);
+    var elementPos;
+
+    indexer(wordObjectKey)
+    console.log(wordsArray);
+}
+
+function indexer(word) {
+    var wordIndex = wordsArray.findIndex(
+        function(wordObject) {
+            return wordObject.wordObjectKey === word;
+        }
+    );
+
+    if(wordIndex < 0) {
+        wordsArray.push({wordObjectKey:word, count:1})
+    } else {
+        wordsArray[wordIndex].count++;
+    }
+}
+
+function displayUniqueWords() {
+    for(i = 0; i < uniqueWordsArray.length; i++) {
+        //console.log(outputBox) HERE-TEXTAREA.length is 1
+        outputBox.append(uniqueWordsArray[i] + "\n");
+    }
+}
+
+function displayWords(wordsArray) {
+    for(i = 0; i< wordsArray.length; i++) {
+        outputBox.append((wordsArray[i].wordObjectKey)+ ":" + wordsArray[i].count + "\n");
+        // console.log(wordsArray[i].wordObjectKey);
+        // console.log(wordsArray[i].count);
+    }
+    console.log("second")
+}
+
